@@ -28,27 +28,69 @@ Using the table of survey results below answer questions 1a, 1b, 1c, and 1d. Ple
 
 What is the probability of voting for the incumbent? (1 point)
 
-550/1165 = .472
+550/1165 = .472 or 47.2%
+
+ANSWER: The probability of voting for the incumbent is approximately is 47.2%
 
 ### Part B
 
 What is the probability of being 18-29 or voting for the incumbent? Write the general (i.e. using symbols) formula you used to obtain your answer and show all of your work. (2 points)
 
+P( A or B) = P(A) + P(B) - P(A and B)
+
+-   P(18-29) 460/1165
+
+-   P(incumbent) 550/1165
+
+-   P(18-29 and Incumbent) 250/1165
+
+(460/1165 + 550/1165) - 250/1165 =
+
+(.395 + .472) - .215 = .652
+
+ANSWER: the probability or voting for the incumbent is 65.2%
+
 ### Part C
 
 In terms of the substantive results (ignore statistical significance), does the evidence support your hypothesis? Explain, using details, how you know (no more than 2 sentences). (5 points)
+
+18-29 years old: 250/460 = 0.5435 or 54.35%
+
+30-65 years old: P(Incumbent) = 150 / 395 ≈ 0.3797 or 37.97%
+
+65+: P(Incumbent) = Incumbent / Total = 150 / 310 ≈ 0.4839 or 48.39%
+
+ANSWER: No, the evidence does not support the hypothesis. When calculating the probability for each age group 18-29 (54.35%) was the highest and ages 65+ was second highest (48.39%), going against the hypothesis.
 
 ### Part D
 
 Imagine that the values in the **Total** column for each age group in *Table 1* remained the same, but the percentage voting for the incumbent in each age group was 51% (i.e. 51% of each age group voted for the incumbent). Now imagine that you were going to construct 90% confidence intervals, using the z table, for the percentage voting for the incumbent for each age group (don't actually do this). List the age groups in order starting with the one that would have the widest confidence interval to the one that would have the narrowest confidence interval, noting any ties. (3 points)
 
+ANSWER:
+
+1.  18 to 29 years old: The CI would likely be wider due to the larger total sample size (460).
+2.  30 to 65 years old: A smaller total sample size (395) compared to the 18 to 29 group, the CI would likely be narrower than the first group but wider than the last.
+3.  Older than 65: Similar to the 30 to 65 group, the CI would likely be narrower due to a smaller total sample size (310).
+
+From widest to narrowest CI would be 18-29, 30-65, and 65+, with the possibility of ties if the sample sizes are very close in size.
+
 ## Question 2
 
 Provide a political science example of a nominal variable. (1 point)
 
+ANSWER: Political Parties; Democratic, Republican, Independent
+
+-   No inherent ranking system and not numerical
+
 ## Question 3
 
 What is the OLS estimate of $Y = \beta_0 + \epsilon$? (That is, in terms of $Y$, what does the OLS estimate of $\beta_0$ equal?) (2 points)
+
+ANSWER:
+
+-   $\beta_0$ in terms of Y is the intercept.
+
+-   The sample mean of the dependent variable Y
 
 ## Question 4
 
@@ -74,22 +116,42 @@ $N = 1,200$ from a random sample of 18 and older Canadians.
 
 Calculate the t-statistic for `Education`. (1 point)
 
+t-statistic = coefficient/SE
+
+ANSWER: -2/.2 = -10
+
 ### Part B
 
 Interpret the results for the `Education` variable, i.e. BRIEFLY discuss the substantive meaning of the results (1 sentence), substantive significance (no more than 2 sentences), and statistical significance (1 sentence). (5 points)
+
+ANSWER:
+
+Substantive Meaning: A negative coefficient for education implies that each year of education is associated with a decrease in 2 points in the feeling thermometer rating for George Bush
+
+Substantive Significance: It suggests that individuals with with a higher level education tend to have lower feeling ratings for George Bush, this signals a relationship with education levels and feelings toward George Bush.
+
+Statistical Significance: The p-value of 0 shows us that we can be quite confident that the relationship between education and the feeling thermometer rating didn't occur by chance and can be a great predictor of feelings towards George Bush.
 
 ### Part C
 
 In this context, is the coefficient on the constant term useful on its own? Why or why not (1 sentence) (5 points)
 
+ANSWER: In this context, the coefficient on the constant term can useful on its own, it provides an estimated value for the DV (feeling thermometer rating of George W. Bush) when all IV are = 0.
+
 ### Part D
 
 Is the coefficient on `U.S. TV access` statistically significant at the 5% error level? (1 point)
+
+ANSWER: Yes, the coefficient on U.S. TV access is statistically significant at the 5% CI level because the p-value associated with U.S. TV access is 0.0126, which is lower than the 0.05 CI level.
 
 ### Part E
 
 Is the coefficient on `U.S. TV access` statistically significant at the 1% error level? (1 point)
 
+ANSWER: No, because U.S. TV access p-value is 0.0126 and is not lower than the 1% error level.
+
 ### Part F
 
 Based on the results in *Table 2*, might the negative coefficient on `U.S. TV Access` be the result of more educated people being more likely to have access to U.S. TV? In no more than 1 sentence, explain your answer. (3 points)
+
+ANSWER: Yes, the negative coefficient on U.S. TV access could be the result of more educated people having less access to TV. The two variables could be confounding variables because those who are more educated might be less likely to have access or watch TV as often, potentially confounding the results and the direct effect of U.S. TV Access.
