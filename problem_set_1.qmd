@@ -9,7 +9,7 @@ execute:
   message: false
 ---
 
-## Question 1
+## Question 1 
 
 Imagine you hypothesize that the probability of voting for the incumbent in a two-candidate race is higher for those who are 30 to 65 years old than for those older than 65.
 
