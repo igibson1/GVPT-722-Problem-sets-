@@ -27,6 +27,10 @@ Imagine you hypothesize that the probability of voting for the incumbent in a tw
 
 What is the probability of voting for the incumbent? (1 point)
 
+::: callout-note
+1/1
+:::
+
 P(Voting for Incumbent) = Total number of votes for incumbent / total number of votes
 
 -   ANSWER: 550/1165 = 0.472 or 47.2%
@@ -34,6 +38,10 @@ P(Voting for Incumbent) = Total number of votes for incumbent / total number of 
 ### Part B
 
 What is the probability of being older than 65 **or** voting for the incumbent? Write the general (i.e. using symbols) formula you used to obtain your answer and show all of your work. (2 points)
+
+::: callout-note
+2/2
+:::
 
 -   P(65+or voting for incumbent)=P(65+)+P(Voting for incumbent)-P(65+ and voting for incumbent)
 
@@ -51,6 +59,12 @@ What is the probability of being older than 65 **or** voting for the incumbent? 
 
 In terms of the substantive results (ignore statistical significance), does the evidence support your hypothesis? Explain, using details, how you know and consider whether, in terms of direction, the results fully support the hypothesis, partially support it, or do not support it at all (no more than 2 sentences). (5 points)
 
+::: callout-note
+5/5
+
+More simply: the hypothesis is not supported.
+:::
+
 -   Based on the substantive results, the evidence partially support the hypothesis that the probability of voting for the incumbent.
 
 -   (18−29 and voting for incumbent)= 250/460 = 0.5435
@@ -65,6 +79,10 @@ In terms of the substantive results (ignore statistical significance), does the 
 
 Imagine that the values in the **Total** column for each age group in Table 1 remained the same, but the percentage voting for the incumbent in each age group was 38% (i.e. 38% of each age group voted for the incumbent). Now imagine that you were going to construct 90% confidence intervals, using the z table, for the percentage voting for the incumbent for each age group (don't actually do this).  List the age groups in order starting with the one that would have the widest confidence interval to the one that would have the narrowest confidence interval, noting any ties. (3 points)
 
+::: callout-note
+3/3
+:::
+
 -   The confidence interval is mainly determined by sample size. The percentage for all is 38%, the age groups in order from widest to narrowest confidence interval would be:
 
 1.  Ages 65+
@@ -75,11 +93,19 @@ Imagine that the values in the **Total** column for each age group in Table 1 re
 
 Provide a political science example of an ordered variable that is not listed on the slides. (1 point)
 
+::: callout-note
+1/1
+:::
+
 -   Level of Political Trust: Strongly trust, trust, somewhat trust, somewhat distrust and strongly distrust
 
 ## Question 3
 
 Provide a political science example of a continuous variable that is not listed on the slides. (1 point)
+
+::: callout-note
+1/1
+:::
 
 -   Amount of spending on an election campaign
 
@@ -104,17 +130,37 @@ N = 1,200 from a random sample of Canadians who are 18 years or older.
 
 Interpret the results for the `U.S. TV Access` variable by **BRIEFLY** discussing the substantive meaning of the results (1 sentence) and statistical significance (1 sentence). (4 points)
 
+::: callout-note
+3/4
+:::
+
 -   The p-value of 0.0000 tells us that this relationship is statistically significant and likely didn't happen by chance. This indicates that the negative coefficient of -15 presents that Canadians who have U.S. TV access tend to rate George W. Bush lower on the feeling thermometer indicating that they feel "cooler" towards him than those who do not have access.
+
+::: callout-note
+Correct, but you should include that Canadians with access to US TV have, **on average**, a 15 point lower opinion of GWB than those who do not have access to US TV.
+:::
 
 ### Part B
 
 In this context, is the coefficient on the constant term useful on its own? Why or why not (1 sentence)? (5 points)
+
+::: callout-note
+0/5
+
+In this context, the coefficient on the constant term is useful. It shows the predicted average feeling held by Canadians with no access to US TV.
+
+Age is not yet included in the model.
+:::
 
 -   In this context, the coefficient on the constant term (55) is not useful on its own, because when the IV Canadians who have access to U.S. TV=0, it does not offer any predictive substance in the overall model and the other IV of age cannot = 0.
 
 ### Part C
 
 From the information provided, can you determine the mean thermometer rating for George W. Bush for 18 and older Canadians with U.S. TV Access and for those without U.S. TV Access? If you can determine those values, what are they, respectively? (3 points)
+
+::: callout-note
+3/3
+:::
 
 -   Mean rating for Canadians with U.S. TV Access
 
@@ -127,6 +173,12 @@ From the information provided, can you determine the mean thermometer rating for
 ### Part D
 
 Based on the results in Table 2, might the negative coefficient on `U.S. TV Access` be the result of younger people being more likely to have access to U.S. TV? In no more than 1 sentence, explain your answer. (3 points)
+
+::: callout-note
+1/3
+
+The model does not include age (that comes in the next question). It is plausible that age plays a part in an individual's feelings towards GWB, so it could be the case that the US TV coefficient reflects this effect.
+:::
 
 -   The negative coefficient on U.S. TV access is likely not a result of younger people being more likely to have access to U.S. TV because age is an IV in the regression model, and the analysis more than likely controls for potential confounding effects/variables of age and U.S. TV Access.
 
@@ -146,7 +198,15 @@ Use the same background information as in Q4, but now imagine you got the result
 
 Interpret the results for the `U.S. TV Access` variable by **BRIEFLY** discussing the substantive meaning of the results (1 sentence) and statistical significance (1 sentence). (4 points)
 
+::: callout-note
+3/4
+:::
+
 -   Substantive meaning of result: The negative coefficient of -7 for U.S. TV access suggests that Canadians with access to U.S. TV stations typically rate George W. Bush slightly lower on the feeling thermometer
+
+::: callout-note
+... on average and holding age else constant.
+:::
 
 -   Statistical significance: A p-value of 0.084 indicates that the result is not significant at the 95% confidence level, it could've occured by chance, but is statistically significant at the 90% confidence level.
 
@@ -154,7 +214,15 @@ Interpret the results for the `U.S. TV Access` variable by **BRIEFLY** discussin
 
 In this context, is the coefficient on the constant term useful on its own? Why or why not (1 sentence)? (5 points)
 
+::: callout-note
+4/5
+:::
+
 -   In this context, the coefficient on the constant term (55) is not useful on its own, because when the IV Canadians who have access to U.S. TV=0, it does not offer any predictive substance in the overall model and the other IV of age cannot = 0.
+
+::: callout-note
+The variable `US TV access` can meaningfully equal zero.
+:::
 
 ## Question 6
 
@@ -164,13 +232,25 @@ Identify a published article in an area that interests you that uses quantitativ
 
 Provide the full citation of the article (hint: you can use one of the ready-made options on Google Scholar). (1 point)
 
+::: callout-note
+1/1
+:::
+
 -   Kilgo, D. K., & Mourão, R. R. (2021). Protest Coverage Matters: How Media Framing and Visual Communication Affects Support for Black Civil Rights Protests. Mass Communication and Society, 24(4), 576-596. <https://doi.org/10.1080/15205436.2021.1884724>
 
 ### Part B
 
 State the hypothesis of interest (if there are several, just pick one) and the method used to evaluate it (e.g., crosstab, OLS, probit etc.). (2 points, if you list more than one hypothesis additional points will be taken off)
 
+::: callout-note
+1/2
+:::
+
 -   One of their hypotheses was: "Participants exposed to news that emphasizes riot or confrontation will be (a) more critical of protesters, (b) less critical of police, (c) less supportive of protesters, and (d) less likely to identify with protesters than participants exposed to coverage that emphasizes the legitimizing debate frame."
+
+::: callout-note
+This is better thought of as four separate hypotheses.
+:::
 
 -   Methods used: They utilize a multivariate analysis of covariance (MANCOVA) to test the effects of protest news frames on attitudes towards Black people, protests and police.
 
@@ -178,11 +258,21 @@ State the hypothesis of interest (if there are several, just pick one) and the m
 
 Report the **substantive** result in no more than two sentences (i.e., the interpretation of the main coefficient, or the effect value/size, do not mention statistical significance). (3 points)
 
+::: callout-note
+3/3
+
+Error carried forward.
+:::
+
 -   The substantive results showed that protester criticism was higher for users exposed to the confrontation and riot frames than the debate frame (H1a), and police criticism was lower (H1b). Means also indicate the exposure to the debate frame led to higher levels of protester identification (H1c) and protester support (H1d).
 
 ### Part D
 
 Does the article provide any discussion of substantive significance? **To ensure that no points are deducted a good faith effort is needed. That is, as long as there is evidence of an answer that shows engagement with this (including discussion with another member of the class) you won't lose points. Engagement plus successful answers can gain up to 5 points.**
+
+::: callout-note
+3/5
+:::
 
 **If yes**, provide a quote of what they say and then - in no more than two sentences - evaluate the logic the author(s) used. Note that it is most likely that you will NOT find an article that actually does this and if they do so, they likely do so poorly -- i.e. they most likely just assert something but do not provide the logic; in those cases you should say they do not do well. Leave this section blank if they do not discuss substantive significance and answer under the "If no" section. Run your answer by at least one other person from class and adjust as needed. List the person(s) you spoke to.
 
@@ -193,5 +283,9 @@ Yes, the article does discuss substantive significance of key findings in the "D
 -   Evaluation of Logic: I thought that the discussion section was decently done in describing what the implications and substantive significance of their key findings, what it means for civil rights movements and media influencing perceptions on movements. The authors findings support the idea that media coverage with legitimizing frames, such as debate frames, can have a small but significant impact on increasing support for and identification with protesters, as well as criticism towards the police.
 
     -   Yuri, Ryan and Jessica
+
+::: callout-note
+This discussion focuses on the substantive meaning, not significance. They are essentially restating the direction of the coefficient, not its magnitude. Are these predicted effects large? Why are they large?
+:::
 
 **If no**, state whether you think the result is substantively significant or not and in no more than two sentences explain why. Do not assume because it is published that the result is substantively significant. Run your answer by at least one other person from class and adjust as needed. If the author(s) discuss substantive significance leave this section blank and answer under the "If yes" section. List the person(s) you spoke to.
