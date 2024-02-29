@@ -1,0 +1,157 @@
+---
+title: "Mid-Term Exam"
+author: "Isabelle Gibson"
+format: 
+  html:
+    self-contained: true
+editor: visual
+execute: 
+  warning: false
+  message: false
+---
+
+## Question 1
+
+Imagine you hypothesize that the probability of voting for the incumbent in a two-candidate race is higher for people age 30 and older. Using the table of survey results below answer questions 1a, 1b, and 1c. Please show all of your work.
+
+| Age          | Challenger | Incumbent | TOTAL |
+|--------------|------------|-----------|-------|
+| 18-29        | 300        | 100       | 400   |
+| 30 and older | 500        | 100       | 600   |
+| TOTAL        | 800        | 200       | 1000  |
+
+: Voting for the Incumbent and Challenger by Age (cell counts)
+
+### Part A
+
+What is the probability of voting for the incumbent? (1 point)
+
+200/10000 = .2
+
+-   The Probability of voting for the incumbent is 20%
+
+### Part B
+
+What is the probability of being 18-29 **or** voting for the incumbent? Write the general (i.e. using symbols) formula you used to obtain your answer and show all of your work. (2 points)
+
+P(A or B) = P(A) + P(B) - P(A and B)
+
+400/1000 + 200/1000 - (100/1000) = .4 + .2 - (.1) = .5
+
+-   The Probability of being 18-29 or voting for the incumbent is 50% or 0.5
+
+### Part C
+
+In terms of the substantive results (ignore statistical significance), does the evidence support your hypothesis? Explain, using details, how you know (no more than 2 sentences). (5 points)
+
+-   P(18-29 Incumbent) =100/400 = .25
+
+-   P(30+ Incumbent) = 100/600 = .1667
+
+-   H1 = probability of voting for the incumbent in a two-candidate race is higher for people age 30 and older
+
+-   The evidence **does not support the hypothesis**, the results show that the probability of voting for the incumbent is not higher for people age 30 and older, it is higher for those ages 18-29. The probability for voting for the incumbent for ages 30+ is 16.67% and probability for ages 18-29 is 25%.
+
+## Question 2
+
+A recent poll of 500 likely Republican voters includes 200 "highly educated" respondents and 300 "poorly educated" respondents. Both groups supported Donald Trump at the same rate. If you were to construct confidence intervals around these estimates, would the confidence interval be larger around the highly educated or poorly educated? Why? Answer in no more than one sentence. (2 points)
+
+-   The sample size for highly education (200) and poorly educated (300)
+
+-   ANSWER: The confidence interval would be larger for "highly educated" because a smaller sample size leads to a wider confidence interval.
+
+## Question 3
+
+Provide a political science example of a continuous variable. (1 point)
+
+-   ANSWER: Political Campaign donations
+
+## Question 4
+
+Use the information that follows to respond to the questions that come after **Table 2**.
+
+The OLS regression results in **Table 2** were obtained from a survey of 1,500 citizens age 16 to 90 in European Union member nations. The p-values are from 2 tailed tests of significance.
+
+**Dependent variable**:
+
+-   European Parliament Feeling Thermometer ranging from 0 (coldest) to 100 (warmest).
+
+**Independent variables**: 
+
+-   Female: coded as equal to `1` for females and equal to `0` otherwise.
+
+-   Education: coded as equal to `1` for those with 0 years of education, coded as equal to `2` for those with 1-8 years of education, coded as equal to `3` for those with 9-11 years of education, and coded as equal to `4` for those with 12 or more years of education.
+
+-   1 = 0 years
+
+-   2 = 1-8 years
+
+-   3 = 9-11 years
+
+-   4 = 12 +
+
+| Independent variable | Coefficient | P-value |
+|----------------------|-------------|---------|
+| Constant             | 3           | 0.000   |
+| Female               | -7          | 0.000   |
+| Education            | 20          | 0.070   |
+
+: Regression results
+
+### Part A
+
+In the context described above, is it useful to interpret the coefficient on the constant term on its own? If it is not useful to do so explain why it is not. If it is useful to do so explain what it reveals. Answer in no more than 2 sentences. (3 points)
+
+-   The constant term is useful to interpret on its own.
+
+-   The constant term provides a predictive average on the European Parliament Feeling Thermometer when an individual is not female (female = 0) and education = 0, however Education cannot be coded = 0.
+
+### Part B
+
+Is the result for education statistically significant at the 5% error level? Answer **YES** or **NO** (1 point)
+
+-   NO
+
+### Part C
+
+Will a 95% confidence interval around the coefficient for education include 0? Answer **YES** or **NO** (1 point)
+
+-   NO
+
+### Part D
+
+What is the substantive meaning of the coefficient on the education variable (i.e. interpret the coefficient estimate)? Answer in one sentence. (3 points)
+
+-   Substantive meaning: The coefficient for education indicates that those with more years in education **on average** will have a 20 pt increase in their feeling thermometer rating toward the European Parliament, than those who have less years of education, **holding all constant.**
+
+### Part F
+
+Based on the results in **Table 2**, might the negative coefficient on `Female` be the result of females having less access to education? In no more than 1 sentence, explain your answer. (3 points)
+
+-   Yes, it might be that the negative coefficient on female may be the result of females having less access to education and the female negative coefficient could be reflecting that education plays a role in forming feelings toward the European Parliament.
+
+## Extra credit
+
+(3 points)
+
+A recent study by Dr. Doofenshmirtz found that an in-class presentation on voting from a fellow student increased the rate of voter registration among high school students in the U.S. by 3 percentage points. On a quantitative methods exam Zuri, Jesse, and Teddy were asked if the effect was substantively significant. The question they were asked did not give any information about statistical significance. The answers they provided follow.
+
+Zuri: The effect is not substantively significant because the rate of registration among high school students is very low and even with a 3 percentage point increase will be low and lower than in other democracies.
+
+Jesse: We just don't know because there isn't any information about statistical significance.
+
+Teddy: The effect is substantively significant because in a close election, the additional people who registered could change the outcome.
+
+Which of the following provides the best evaluation of the above answers?
+
+A.  Jesse would be marked as correct, and the others as incorrect
+
+B.  Teddy would be marked as correct, and the others as incorrect
+
+C.  Zuri would be marked as correct, and the others as incorrect
+
+D.  Zuri and Jesse would both be marked correct, and Teddy as incorrect
+
+E.  Zuri and Teddy would both be marked correct, and Jesse as incorrect
+
+ANSWER: B
