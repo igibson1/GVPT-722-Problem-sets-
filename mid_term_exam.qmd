@@ -26,6 +26,10 @@ Imagine you hypothesize that the probability of voting for the incumbent in a tw
 
 What is the probability of voting for the incumbent? (1 point)
 
+::: callout-note
+1/1
+:::
+
 200/10000 = .2
 
 -   The Probability of voting for the incumbent is 20%
@@ -33,6 +37,10 @@ What is the probability of voting for the incumbent? (1 point)
 ### Part B
 
 What is the probability of being 18-29 **or** voting for the incumbent? Write the general (i.e. using symbols) formula you used to obtain your answer and show all of your work. (2 points)
+
+::: callout-note
+2/2
+:::
 
 P(A or B) = P(A) + P(B) - P(A and B)
 
@@ -43,6 +51,10 @@ P(A or B) = P(A) + P(B) - P(A and B)
 ### Part C
 
 In terms of the substantive results (ignore statistical significance), does the evidence support your hypothesis? Explain, using details, how you know (no more than 2 sentences). (5 points)
+
+::: callout-note
+5/5
+:::
 
 -   P(18-29 Incumbent) =100/400 = .25
 
@@ -56,6 +68,10 @@ In terms of the substantive results (ignore statistical significance), does the 
 
 A recent poll of 500 likely Republican voters includes 200 "highly educated" respondents and 300 "poorly educated" respondents. Both groups supported Donald Trump at the same rate. If you were to construct confidence intervals around these estimates, would the confidence interval be larger around the highly educated or poorly educated? Why? Answer in no more than one sentence. (2 points)
 
+::: callout-note
+2/2
+:::
+
 -   The sample size for highly education (200) and poorly educated (300)
 
 -   ANSWER: The confidence interval would be larger for "highly educated" because a smaller sample size leads to a wider confidence interval.
@@ -63,6 +79,10 @@ A recent poll of 500 likely Republican voters includes 200 "highly educated" res
 ## Question 3
 
 Provide a political science example of a continuous variable. (1 point)
+
+::: callout-note
+1/1
+:::
 
 -   ANSWER: Political Campaign donations
 
@@ -102,13 +122,25 @@ The OLS regression results in **Table 2** were obtained from a survey of 1,500 c
 
 In the context described above, is it useful to interpret the coefficient on the constant term on its own? If it is not useful to do so explain why it is not. If it is useful to do so explain what it reveals. Answer in no more than 2 sentences. (3 points)
 
+::: callout-note
+2/3
+:::
+
 -   The constant term is useful to interpret on its own.
 
 -   The constant term provides a predictive average on the European Parliament Feeling Thermometer when an individual is not female (female = 0) and education = 0, however Education cannot be coded = 0.
 
+::: callout-note
+The constant term is **not** useful to interpret on its own.
+:::
+
 ### Part B
 
 Is the result for education statistically significant at the 5% error level? Answer **YES** or **NO** (1 point)
+
+::: callout-note
+1/1
+:::
 
 -   NO
 
@@ -116,23 +148,47 @@ Is the result for education statistically significant at the 5% error level? Ans
 
 Will a 95% confidence interval around the coefficient for education include 0? Answer **YES** or **NO** (1 point)
 
+::: callout-note
+0/1
+:::
+
 -   NO
 
 ### Part D
 
 What is the substantive meaning of the coefficient on the education variable (i.e. interpret the coefficient estimate)? Answer in one sentence. (3 points)
 
+::: callout-note
+1.5/3
+:::
+
 -   Substantive meaning: The coefficient for education indicates that those with more years in education **on average** will have a 20 pt increase in their feeling thermometer rating toward the European Parliament, than those who have less years of education, **holding all constant.**
+
+::: callout-note
+You need to specify what increase in education is associated with this increase in feeling.
+:::
 
 ### Part F
 
 Based on the results in **Table 2**, might the negative coefficient on `Female` be the result of females having less access to education? In no more than 1 sentence, explain your answer. (3 points)
 
+::: callout-note
+0/3
+:::
+
 -   Yes, it might be that the negative coefficient on female may be the result of females having less access to education and the female negative coefficient could be reflecting that education plays a role in forming feelings toward the European Parliament.
+
+::: callout-note
+Level of education is accounted for in the model.
+:::
 
 ## Extra credit
 
 (3 points)
+
+::: callout-note
+The correct answer is E.
+:::
 
 A recent study by Dr. Doofenshmirtz found that an in-class presentation on voting from a fellow student increased the rate of voter registration among high school students in the U.S. by 3 percentage points. On a quantitative methods exam Zuri, Jesse, and Teddy were asked if the effect was substantively significant. The question they were asked did not give any information about statistical significance. The answers they provided follow.
 
