@@ -1,0 +1,210 @@
+---
+title: "Problem set 3"
+author: "Isabelle Gibson"
+format: 
+  html:
+    self-contained: true
+editor: visual
+execute: 
+  warning: false
+  message: false
+---
+
+In this assignment you will use U.S. Census data from the Current Population Survey Voter Supplement Files from 1972-2000 (excluding 1976) aggregated to the state level.  The data file is on the course ELMS site and is named `aggcpsgvpt722.dta`. Please create a script file that shows your work and answer the questions below using the following information. Include the script file with your responses. Unless otherwise noted, you do not need to include tables or graphs of the results.
+
+*Your script needs to run without errors. Please make sure to render it and look at the output before submitting it.*
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(modelsummary)
+library(ggplot2)
+library(broom)
+uscensus <- haven::read_dta ("aggcpsgvpt722.dta")
+
+uscensus <- uscensus|>
+  select(vote, south, pcthsg)
+```
+
+**Dependent Variable**
+
+-   `vote`: defined as the turnout rate in a state in a given year (i.e. number who voted divided by the number eligible to vote).
+
+**Independent Variables**
+
+-   `south`: a dummy variable equal to 1 for states from the confederacy and 0 otherwise.
+
+-   `pcthsg`: percentage of the population in a state that graduated high school (i.e. % that graduated high school only, as well as those who have more education).
+
+*Be sure to look at the distributions of each of the variables. (On your own, but we should see that you did this in your code).*
+
+```{r}
+
+#Plotting the distribution of the DV 'vote'
+ggplot(uscensus, aes(x = vote)) +
+  geom_histogram(binwidth = 0.05, fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Turnout Rate (vote)",
+       x = "Turnout Rate",
+       y = "Frequency") +
+  theme_minimal()
+
+# Plot the distribution of the IV 'south'
+ggplot(uscensus, aes(x = factor(south))) +
+  geom_bar(fill = "lightgreen", color = "black") +
+  labs(title = "Distribution of South",
+       x = "South",
+       y = "Frequency") +
+  scale_x_discrete(labels = c("Not South", "South")) +
+  theme_minimal()
+
+# Plot the distribution of the IV 'pcthsg'
+ggplot(uscensus, aes(x = pcthsg)) +
+  geom_histogram(binwidth = 5, fill = "salmon", color = "black") +
+  labs(title = "Distribution of Percentage of High School Graduates",
+       x = "Percentage of High School Graduates",
+       y = "Frequency") +
+  theme_minimal()
+
+```
+
+## Question 1
+
+Using descriptive statistics only, what is the mean turnout rate in southern states? (1 point)
+
+```{r}
+
+#filter the dataset for southern states
+southern_states <- subset(uscensus, south == 1)
+
+#summary statistics to find the mean turnout rate for southern states
+summary(southern_states$vote)
+
+
+```
+
+ANSWER: Mean turnout rate for southern states = 61.07
+
+## Question 2
+
+Using descriptive statistics only, what is the mean turnout rate in non-southern states? (1 point)
+
+```{r}
+
+#filter the dataset for non-southern states
+non_southern_states <- subset(uscensus, south == 0)
+
+#summary statistics to find the mean turnout rate for non-southern states
+summary(non_southern_states$vote)
+
+```
+
+ANSWER: Mean turnout rate non-southern states = 68.18
+
+## Question 3
+
+Is the difference in mean turnout in southern vs. non-southern states **substantively significant**? That is, is the difference consequential to politics? Explain. Please confine your answer to no more than 2 sentences. (4 points)
+
+ANSWER: The mean difference between the two regions mean turnout is substantively significant, the mean turnout for southern states is 7.11% lower than the mean turnout rate for non-southern states. While 7% may seem small, it likely indicates a significant disparity in voter engagement between the two regions, which can cause implications in political outcomes.
+
+## Question 4
+
+Using a difference of means test, is the difference statistically significant at $p<0.05$? (1 point)
+
+```{r}
+#turnout rates for southern and non-southern states
+turnout_southern <- c(rep(1, 77), rep(0, 280))  # 1 represents southern states
+turnout_non_southern <- c(rep(1, 280), rep(0, 77))  # 0 represents non-southern states
+
+#two-sample t-test
+result <- t.test(turnout_southern, turnout_non_southern)
+
+#result
+print(result)
+```
+
+ANSWER: Yes, the difference is significant and statistically significant. t = -18.445 which suggest significant difference in turnout rates between the two regions. With the a very low p-value 2.2e-16 making it statistically significant.
+
+## Question 5
+
+Run a regression with `vote` as the dependent variable and `south` as the independent variable. Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)
+
+```{r}
+# Run the regression
+reg_model <- lm(vote ~ south, data = uscensus)
+
+summary(reg_model)
+
+#Tidy up the results using broom
+tidy_results <- tidy(reg_model)
+tidy_results
+
+modelsummary(reg_model,
+            coef_rename = c(south = "Southern States"
+                           ),
+             statistic = c("t = {statistic}", "SE = {std.error}", "conf.int", "p.value"))
+```
+
+ANSWER: Based on the regression results, yes it is meaningful to interpret the constant term on its own.
+
+-   Why?: The constant term provides the estimated average turnout rate for non-southern states when the IV (south) = 0, providing essential information on the level of turnout rates for states that are not in the southern region.
+
+## Question 6
+
+Using the regression you just ran, in no more than one sentence interpret the **substantive meaning** of the coefficient on the `south` variable. (2 points)
+
+ANSWER: The substantive meaning of the south coefficient indicates that, **on average**, the turnout rate in southern states is about (-)7.11 percentage points **lower** than the average turnout in non-southern states, **holding all other factors constant**.
+
+## Question 7
+
+True or False. The results from the questions above indicate that the difference of means approach and the regression allow one to draw an identical set of conclusions? (1 point)
+
+False. Regression can provide insights on **relationships** between variables but does not mean they'll lead to identical conclusions.
+
+## Question 8
+
+Run a regression with `vote` as the dependent variable and `south` and `pcthsg` as the independent variables. [Report the results in a professionally formatted table.]{.underline} Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)
+
+```{r}
+# Run the regression
+reg_model_2 <- lm(vote ~ south + pcthsg, data = uscensus)
+
+summary(reg_model_2)
+
+#Tidy up the results using broom
+tidy_results <- tidy(reg_model_2)
+tidy_results
+
+modelsummary(reg_model_2,
+            coef_rename = c(south = "Southern States",
+                            pcthsg = "Percentage of Population with Highschool Diploma"
+                           ),
+             statistic = c("t = {statistic}", "SE = {std.error}", "conf.int", "p.value"))
+```
+
+ANSWER: No, it is not meaningful to interpret the constant term on its own.
+
+-   Why?: While the constant term gives a **predictive average** on the voter turnout in non-southern states with a 0% population percentage of high school graduates, **holding other variables constant,** which might seem meaningful. But, the likelihood that there is a non-southern state (or a southern state for that matter) with a population of no high-school graduates at all, is very low and interpreting the constant term when south and pcthsg = 0 is not meaningful.
+
+## Question 9
+
+Compared to the regression you ran in *Question 5*, what happened to the coefficient on the `south` variable and why? Answer in no more than 2 sentences. (2 points)
+
+*Hint: take a look at the relationship between `south` and `pcthsg` (consider whether the `pcthsg` differs in the `south` vs. the `non-south`).*
+
+1st regression model:
+
+Coeff. South: -7.1134
+
+2nd regression model:
+
+Coeff. South: -6.00286
+
+ANSWER: The decrease in the south coefficient from -7.113 to -6.003, while controlling for pcthsg (percentage of HS graduates), indicates a slight decrease effect of being from a southern state on voter turnout. It is plausible that this change is due to the inclusion of the new predictor, which likely accounts for some of the variance previously attributed to the south variable alone.
+
+## Question 10
+
+Reflecting on all of the analyses you have run, is south, in the regression from *Question 5* exogenous? Why or why not? Answer in no more than one sentence. (1 point)
+
+ANSWER: No, south is not an exogenous variable
+
+-   In model 2, the inclusion of the pcthsg variable explains some of the effect of "south" observed in model 1, the coefficient changes indicating that "south" may also be correlated with additional factors not accounted for in the analysis.
