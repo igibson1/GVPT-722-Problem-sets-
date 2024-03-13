@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -3441,6 +3441,19 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <section id="question-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
 <p>Using descriptive statistics only, what is the mean turnout rate in southern states? (1 point)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>1/1</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter the dataset for southern states</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>southern_states <span class="ot">&lt;-</span> <span class="fu">subset</span>(uscensus, south <span class="sc">==</span> <span class="dv">1</span>)</span>
@@ -3457,6 +3470,19 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
 <p>Using descriptive statistics only, what is the mean turnout rate in non-southern states? (1 point)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>1/1</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter the dataset for non-southern states</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>non_southern_states <span class="ot">&lt;-</span> <span class="fu">subset</span>(uscensus, south <span class="sc">==</span> <span class="dv">0</span>)</span>
@@ -3473,11 +3499,50 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <section id="question-3" class="level2">
 <h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
 <p>Is the difference in mean turnout in southern vs. non-southern states <strong>substantively significant</strong>? That is, is the difference consequential to politics? Explain. Please confine your answer to no more than 2 sentences. (4 points)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>3/4</p>
+</div>
+</div>
 <p>ANSWER: The mean difference between the two regions mean turnout is substantively significant, the mean turnout for southern states is 7.11% lower than the mean turnout rate for non-southern states. While 7% may seem small, it likely indicates a significant disparity in voter engagement between the two regions, which can cause implications in political outcomes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What implications in which political outcomes?</p>
+</div>
+</div>
 </section>
 <section id="question-4" class="level2">
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
 <p>Using a difference of means test, is the difference statistically significant at <span class="math inline">\(p&lt;0.05\)</span>? (1 point)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>1/1</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#turnout rates for southern and non-southern states</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>turnout_southern <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">77</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">280</span>))  <span class="co"># 1 represents southern states</span></span>
@@ -3507,6 +3572,19 @@ mean of x mean of y
 <section id="question-5" class="level2">
 <h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
 <p>Run a regression with <code>vote</code> as the dependent variable and <code>south</code> as the independent variable. Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>2/2</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the regression</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reg_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote <span class="sc">~</span> south, <span class="at">data =</span> uscensus)</span>
@@ -3641,16 +3719,55 @@ F-statistic: 85.86 on 1 and 355 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="question-6" class="level2">
 <h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
 <p>Using the regression you just ran, in no more than one sentence interpret the <strong>substantive meaning</strong> of the coefficient on the <code>south</code> variable. (2 points)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>2/2</p>
+</div>
+</div>
 <p>ANSWER: The substantive meaning of the south coefficient indicates that, <strong>on average</strong>, the turnout rate in southern states is about (-)7.11 percentage points <strong>lower</strong> than the average turnout in non-southern states, <strong>holding all other factors constant</strong>.</p>
 </section>
 <section id="question-7" class="level2">
 <h2 class="anchored" data-anchor-id="question-7">Question 7</h2>
 <p>True or False. The results from the questions above indicate that the difference of means approach and the regression allow one to draw an identical set of conclusions? (1 point)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>0/1</p>
+</div>
+</div>
 <p>False. Regression can provide insights on <strong>relationships</strong> between variables but does not mean they’ll lead to identical conclusions.</p>
 </section>
 <section id="question-8" class="level2">
 <h2 class="anchored" data-anchor-id="question-8">Question 8</h2>
 <p>Run a regression with <code>vote</code> as the dependent variable and <code>south</code> and <code>pcthsg</code> as the independent variables. <u>Report the results in a professionally formatted table.</u> Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>2/2</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the regression</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reg_model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote <span class="sc">~</span> south <span class="sc">+</span> pcthsg, <span class="at">data =</span> uscensus)</span>
@@ -3808,6 +3925,19 @@ F-statistic: 49.94 on 2 and 354 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="question-9" class="level2">
 <h2 class="anchored" data-anchor-id="question-9">Question 9</h2>
 <p>Compared to the regression you ran in <em>Question 5</em>, what happened to the coefficient on the <code>south</code> variable and why? Answer in no more than 2 sentences. (2 points)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>2/2</p>
+</div>
+</div>
 <p><em>Hint: take a look at the relationship between <code>south</code> and <code>pcthsg</code> (consider whether the <code>pcthsg</code> differs in the <code>south</code> vs. the <code>non-south</code>).</em></p>
 <p>1st regression model:</p>
 <p>Coeff. South: -7.1134</p>
@@ -3818,6 +3948,19 @@ F-statistic: 49.94 on 2 and 354 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="question-10" class="level2">
 <h2 class="anchored" data-anchor-id="question-10">Question 10</h2>
 <p>Reflecting on all of the analyses you have run, is south, in the regression from <em>Question 5</em> exogenous? Why or why not? Answer in no more than one sentence. (1 point)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>1/1</p>
+</div>
+</div>
 <p>ANSWER: No, south is not an exogenous variable</p>
 <ul>
 <li>In model 2, the inclusion of the pcthsg variable explains some of the effect of “south” observed in model 1, the coefficient changes indicating that “south” may also be correlated with additional factors not accounted for in the analysis.</li>

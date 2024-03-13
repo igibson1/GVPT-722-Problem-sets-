@@ -71,6 +71,10 @@ ggplot(uscensus, aes(x = pcthsg)) +
 
 Using descriptive statistics only, what is the mean turnout rate in southern states? (1 point)
 
+::: callout-note
+1/1
+:::
+
 ```{r}
 
 #filter the dataset for southern states
@@ -88,6 +92,10 @@ ANSWER: Mean turnout rate for southern states = 61.07
 
 Using descriptive statistics only, what is the mean turnout rate in non-southern states? (1 point)
 
+::: callout-note
+1/1
+:::
+
 ```{r}
 
 #filter the dataset for non-southern states
@@ -104,11 +112,23 @@ ANSWER: Mean turnout rate non-southern states = 68.18
 
 Is the difference in mean turnout in southern vs. non-southern states **substantively significant**? That is, is the difference consequential to politics? Explain. Please confine your answer to no more than 2 sentences. (4 points)
 
+::: callout-note
+3/4
+:::
+
 ANSWER: The mean difference between the two regions mean turnout is substantively significant, the mean turnout for southern states is 7.11% lower than the mean turnout rate for non-southern states. While 7% may seem small, it likely indicates a significant disparity in voter engagement between the two regions, which can cause implications in political outcomes.
+
+::: callout-note
+What implications in which political outcomes?
+:::
 
 ## Question 4
 
 Using a difference of means test, is the difference statistically significant at $p<0.05$? (1 point)
+
+::: callout-note
+1/1
+:::
 
 ```{r}
 #turnout rates for southern and non-southern states
@@ -127,6 +147,10 @@ ANSWER: Yes, the difference is significant and statistically significant. t = -1
 ## Question 5
 
 Run a regression with `vote` as the dependent variable and `south` as the independent variable. Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)
+
+::: callout-note
+2/2
+:::
 
 ```{r}
 # Run the regression
@@ -152,17 +176,29 @@ ANSWER: Based on the regression results, yes it is meaningful to interpret the c
 
 Using the regression you just ran, in no more than one sentence interpret the **substantive meaning** of the coefficient on the `south` variable. (2 points)
 
+::: callout-note
+2/2
+:::
+
 ANSWER: The substantive meaning of the south coefficient indicates that, **on average**, the turnout rate in southern states is about (-)7.11 percentage points **lower** than the average turnout in non-southern states, **holding all other factors constant**.
 
 ## Question 7
 
 True or False. The results from the questions above indicate that the difference of means approach and the regression allow one to draw an identical set of conclusions? (1 point)
 
+::: callout-note
+0/1
+:::
+
 False. Regression can provide insights on **relationships** between variables but does not mean they'll lead to identical conclusions.
 
 ## Question 8
 
 Run a regression with `vote` as the dependent variable and `south` and `pcthsg` as the independent variables. [Report the results in a professionally formatted table.]{.underline} Is it meaningful to interpret the constant term on its own? If so, what information does it provide? Answer in one sentence. (2 points)
+
+::: callout-note
+2/2
+:::
 
 ```{r}
 # Run the regression
@@ -189,6 +225,10 @@ ANSWER: No, it is not meaningful to interpret the constant term on its own.
 
 Compared to the regression you ran in *Question 5*, what happened to the coefficient on the `south` variable and why? Answer in no more than 2 sentences. (2 points)
 
+::: callout-note
+2/2
+:::
+
 *Hint: take a look at the relationship between `south` and `pcthsg` (consider whether the `pcthsg` differs in the `south` vs. the `non-south`).*
 
 1st regression model:
@@ -204,6 +244,10 @@ ANSWER: The decrease in the south coefficient from -7.113 to -6.003, while contr
 ## Question 10
 
 Reflecting on all of the analyses you have run, is south, in the regression from *Question 5* exogenous? Why or why not? Answer in no more than one sentence. (1 point)
+
+::: callout-note
+1/1
+:::
 
 ANSWER: No, south is not an exogenous variable
 
