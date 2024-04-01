@@ -27,11 +27,19 @@ Imagine you hypothesize that the probability of supporting a law to lower the vo
 
 What is the probability of supporting the law? (1 point)
 
+::: callout-note
+1/1
+:::
+
 ANSWER: 500/1000 = .5 or 50%
 
 ### Part B
 
 What is the probability of being 18-29 **or** supporting the law? Write the general (i.e. using symbols) formula you used to obtain your answer and show all of your work. (2 points)
+
+::: callout-note
+2/2
+:::
 
 P(A or B) = P(A) + P(B) - P(A and B)
 
@@ -40,6 +48,10 @@ ANSWER: (500/1000 + 300/1000) - (200/1000) = .6 or 60%
 ### Part C
 
 In terms of the substantive results (ignore statistical significance), does the evidence support your hypothesis? Explain, using details, how you know (no more than 2 sentences). (5 points)
+
+::: callout-note
+5/5
+:::
 
 P(18-29 and support) = 200/300 = .667
 
@@ -51,6 +63,10 @@ ANSWER: Yes, the evidence does support the hypothesis that the probability of su
 
 A recent poll of 500 likely Republican voters includes 300 "highly educated" respondents and 200 "poorly educated" respondents. Both groups supported Donald Trump at the same rate. If you were to construct confidence intervals around these estimates, would the confidence interval be larger around the highly educated or poorly educated? Why? Answer in [no more than one sentence]{.underline}. (2 points)
 
+::: callout-note
+2/2
+:::
+
 300 highly educated
 
 200 poorly educated
@@ -60,6 +76,10 @@ ANSWER: The CI would be larger around **poorly educated** respondents because a 
 ## Question 3
 
 Provide a political science example of a continuous variable. (1 point)
+
+::: callout-note
+1/1
+:::
 
 ANSWER: Campaign Donations (\$)
 
@@ -91,11 +111,19 @@ The OLS regression results in Table 2 were obtained from a survey of 1,500 citiz
 
 In the context described above, is it useful to interpret the coefficient on the constant term on its own? **If it is not useful** to do so explain why it is not. **If it is useful** to do so explain what it reveals. Answer in [no more than 2 sentences]{.underline}. (3 points)
 
+::: callout-note
+3/3
+:::
+
 ANSWER: **No**, the constant term is not useful to interpret on its own, it provides a **predictive average** on the European Feeling Thermometer rating when an individual is **not** female (female = 0) and when the individual has 0 years of education (education = 0). While Education and Female can be coded/equal 0, it is not particularly useful to look at non-females who have no education at all because it doesn't provide practical insight, most people 16-90 years old have some level of education.
 
 ### Part B
 
 Is the result for education statistically significant at the 5% error level? Answer **YES** or **NO** (1 point)
+
+::: callout-note
+1/1
+:::
 
 p-value = 0.120
 
@@ -104,6 +132,10 @@ ANSWER: NO
 ### Part C
 
 Will a 95% confidence interval around the coefficient for education include 0? Answer **YES** or **NO** (1 point)
+
+::: callout-note
+1/1
+:::
 
 ANSWER: YES
 
@@ -116,6 +148,10 @@ ANSWER: The coefficient variable education shows us that **on average,** a one u
 ### Part E
 
 Based on the results in Table 2, might the negative coefficient on Female be the result of females having less **income**? In no more than 1 sentence, explain your answer. (3 points)
+
+::: callout-note
+3/3
+:::
 
 ANSWER: Yes it could be possible that the negative coefficient on Female might be the result of females having less income since income was not included in our model, it is not controlled for.
 
@@ -130,6 +166,10 @@ A recent study by Dr. Doofenshmirtz found that those who were randomly selected 
 -   Zuri: The effect is substantively significant because this information boosts support over 50%, so a campaign by young people stressing these points could help the policy pass by getting more than 50% support.
 
 Which of the following provides the [**best**]{.underline} evaluation of the above answers?
+
+::: callout-note
+3/3
+:::
 
 A.  Jesse would be marked as correct, and the others as incorrect
 
