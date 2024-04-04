@@ -1,0 +1,187 @@
+---
+title: "Short Paper One"
+author: Isabelle Gibson
+format: 
+  pdf:
+    fig-pos: "H"
+    linestretch: 2
+    fontsize: "12pt"
+    margin-bottom: "1in"
+    margin-top: "1in"
+    margin-left: "1in"
+    margin-right: "1in"
+editor: visual
+execute: 
+  message: false
+  warning: false
+  echo: false
+---
+
+```{r}
+library(foreign)
+library(dplyr)
+library(ggplot2)
+library(haven)
+library(modelsummary)
+library(broom)
+
+```
+
+```{r}
+#data
+uscensus <- read_dta("aggcpsgvpt722.dta")
+
+uscensus_shortp <- uscensus |> 
+  select(vote, close, pcthsg, south)
+```
+
+***Hypothesis***
+
+The hypothesis that I will be examining is; **on average closing date and turnout will have a negative relationship, the percentage of high school graduates in the state will have a positive relationship with turnout, and southern states will have lower turnout rates, controlling for the other factors.**
+
+***Bivariate Model Analysis***
+
+The initial results of my bivariate regression model in *Table 1 (see appendix)* show us that there is a positive relationship. On average a one-unit increase in the population percentage of high school graduates is associated with a 0.234 unit increase in voter turnout, it is statistically significant at the .001 level. The scatterplot 1 *(see appendix)* presents a visual of the positive trend and relationship between high school graduation population percentage and voter turnout. These results support my hypothesis.
+
+The initial results of my bivariate regression model in *Table 2 (see appendix)* show us that there is a negative relationship. On average a one-unit increase in the closing date for registration, voter turnout decreases by 0.266 units and is statistically significant at the .001 level. To further analyze my results, I present a scatterplot 2 in figure 2 *(see appendix)*, that displays the negative relationship between closing date registration and voter turn out, the plot displayed a downward trend. These results supports my hypothesis.
+
+The initial results of my bivariate regression model in *Table 3 (see appendix)* show us that on average, the turnout rate in southern states is about (-)7.11 percentage points **lower** than the average turnout in non-southern states. This is statistically significant at the .001 level. The boxplot in *figure 3* *(see appendix)* provides a visual representation of the voter turnout in southern (1) and non-southern (0) states. It shows that voter turnout in southern states is lower than non-southern states, further supporting my hypothesis.
+
+***Multivariate Analysis***
+
+The model I present in this paper shows that state level voter turnout (DV) is a function of the closing date (IV) for registration (`close`), the percentage of high school graduates (IV) in the state (`pcthsg`), and whether or not the state is a southern (IV) state (`south`).
+
+The ***Model*** is as follows:
+
+> $$
+> Vote = \beta_0\ +close \times\ \beta_1\ + pcthsg \times\ \beta_2\ + south \times\ \beta_3\ + e 
+> $$
+
+***Results***
+
+The multivariate regression model (Table 4, see appendix) examines the impact of three variables on voter turnout: the percentage of high school graduates, registration closing date, and Southern state status.
+
+The intercept (66.412) provides the predicted average voter turnout when all other variables are zero, but this value lacks practical significance. The likelihood that a state has population with no high school graduates is very low. The negative coefficient for registration closing date (-0.207) suggests that on average, a one unit increase in closing date registration, voter turnout decreases by about 0.207 percentage points, holding all else constant, supporting the hypothesis of a negative association.
+
+The positive coefficient for high school graduates (0.079) indicates that on average, one percentage point increase in high school graduates population is associated with a .079 increase in voter turnout. It's not statistically significant, there's insufficient evidence to support a clear relationship and does not support my hypothesis[^1]. The negative coefficient for Southern states (-5.256) indicates that on average, southern states will have a lower turnout compared to non-Southern states by 5.256 percentage points, supporting the hypothesis of lower turnout in Southern states.
+
+[^1]: When you run the regression without robust SE, the popualation percentage of highschool graduation is significant at the 0.05 level. But if you run the regression wiht robust SE (which is the regression table 4) then it is not significant at the .05 level (it is significant at the .10 level).
+
+***Conclusion***
+
+The results of this paper suggests that voter turnout is influenced by a mix of registration closing date, the population percentage of high school graduates, and whether the state is in the south or not. These findings could impact policy-making, particularly in considering the effect of registration deadlines on voter turnout. It implies that individuals are less likely to participate in elections if they have less time to register. Policy-makers when deciding on electoral policy may want to consider this finding and give ample time for voters to register. While the percentage of high school graduates is not statistically significant in this model, it's worth noting. The relationship between high school graduates and voter turnout in the bivariate analysis is statistically significant. Policy-makers may want to invest in initiatives promoting high school graduation, since it could potentially impact electoral participation. The lower voter turnout in southern states highlights the historical, cultural, and institutional factors unique to the Southern region may continue to influence electoral behavior and should be taken into account in efforts to enhance democratic participation.
+
+***Appendix***
+
+***Voter Turnout on Percentage of Population with High School Diplomas: Regression Table 1***
+
+```{r}
+#regression of pcthsg
+reg_pcthsg <- lm(vote ~ pcthsg, data = uscensus_shortp)
+
+modelsummary(reg_pcthsg,
+             position = "H",
+              title = "Regression Summary",
+             coef_rename = c(pcthsg = "% of HS Graduates"
+                           ),
+             stars = TRUE)
+```
+
+```{r echo=FALSE}
+cor_1 <- cor(uscensus_shortp$vote, uscensus_shortp$pcthsg)
+print(cor_1)
+```
+
+***Figure 1: Scatterplot***
+
+```{r}
+#vote and HS grad
+ggplot(uscensus_shortp, aes(x = pcthsg, y = vote)) +
+  geom_point() +
+  labs(title = "Scatterplot 1: Voter Turnout Rate vs. Percentage of Population with HS Diploma",
+       x = "% of HS Graduates",
+       y = "Voter Turnout Rate") +
+  theme_minimal()
+
+
+```
+
+***Voter Turnout on Closing Date for Voter Registration: Regression Table 2***
+
+```{r}
+#regression of close 
+reg_close <- lm(vote ~ close, data = uscensus_shortp)
+
+modelsummary(reg_close,
+            position = "H",
+            title = "Regression Summary",
+             coef_rename = c(close = "Closing Date for Registration"
+                           ),
+             stars = TRUE)
+
+cor_2 <- cor(uscensus_shortp$vote, uscensus_shortp$close)
+print(cor_2)
+```
+
+***Figure 2: Scatterplot***
+
+```{r echo=FALSE, fig.show='hold'}
+#vote and close 
+ggplot(uscensus_shortp, aes(x = close, y = vote)) +
+  geom_point() +
+  labs(title = "Scatterplot 2: Voter Turnout Rate vs. Close date for registration ",
+       x = "Closing Date",
+       y = "Voter Turnout Rate") +
+  theme_minimal()
+
+```
+
+***Voter Turnout on Southern State: Regression Table 3***
+
+```{r echo=FALSE, fig.show='hold'}
+#regression of south 
+reg_south <- lm(vote ~ south, data = uscensus_shortp)
+
+modelsummary(reg_south,
+             position = "H",
+              title = "Regression Summary",
+             coef_rename = c(south = "Southern States"
+                           ), stars = TRUE)
+
+cor_3 <- cor(uscensus_shortp$vote, uscensus_shortp$south)
+print(cor_3)
+
+```
+
+***Figure 3: Boxplot***
+
+```{r echo=FALSE, fig.show='hold'}
+#vote and south 
+ggplot(uscensus_shortp, aes(x = as.factor(south), y = vote)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Voter Turnout vs. Southern States",
+    x = "Southern States", y = "Voter Turnout")
+```
+
+***Multivariate Regression Model: Table 4***
+
+```{r echo=FALSE, fig.show='hold'}
+#Multivariate regression model vote, south, close and HS grad %
+
+reg_model <- lm(vote ~ close + pcthsg + south, data = uscensus_shortp)
+
+reg_model <- list(
+  "OLS 1" = lm(vote ~ close + pcthsg + south, data = uscensus_shortp)
+)
+modelsummary(reg_model,
+            position = "H", 
+            title = "Table 4: Multivariate Regression Summary",
+            statistic = c("SE = {std.error}", "conf.int", "p.value"),
+            vcov = "robust", 
+            stars = TRUE,
+            coef_rename = c(south = "Southern States",
+                            pcthsg = "Percentage of Population with Highschool Diploma",
+                            close = "Close date for Registration"),
+            conf_level = 0.95
+)
+```
