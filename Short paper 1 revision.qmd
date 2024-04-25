@@ -1,0 +1,89 @@
+---
+title: "Short Paper 1 Revision"
+author: Isabelle Gibson
+format: 
+  pdf:
+    fig-pos: "H"
+    linestretch: 2
+    fontsize: "12pt"
+    margin-bottom: "1in"
+    margin-top: "1in"
+    margin-left: "1in"
+    margin-right: "1in"
+editor: visual
+execute: 
+  message: false
+  warning: false
+  echo: false
+---
+
+***MEMO: Revisions from Reviewers***
+
+I have noted each of the comments from Reviewer 1 and 2 in this memo, thank you for all the critiques and notes!
+
+**REVIEWER 1 NOTES (Harriet)**
+
+**Revision #1:** Reviewer 1 noted that I did not explain what my bivariate regression model was presenting: "What does this regression model?". I have included a specified description of what each of the bivariate regression tables relationships model.
+
+-   The initial results of my bivariate regression model of the relationship between a state's voter turnout rate and its high school graduation rate in **Table 1 (see appendix)** show us that there is a positive relationship.
+
+```{=html}
+<!-- -->
+```
+-   The initial results of my bivariate regression model of the relationship between a a state's voter turnout and it's closing date for registration in **Table 2 (see appendix)** show us that there is a negative relationship.
+
+-   The initial results of my bivariate regression model in **Table 3 (see appendix)** show us the relationship of voter turnout and the state being southern or non-southern. Southern states have a lower turnout rate than in non-southern states.
+
+**Revision #2: *Bivariate Model Analysis*** Reviewer 1 also noted that I need to avoid using the term "one-unit increase" in describing my regression results. "Please avoid using "a one-unit increase". Use the variable's unit." I have included my revised explanation below with each bivariate regression relationship specified unit.
+
+-   The initial results of my bivariate regression model in *Table 1 (see appendix)* show us that there is a positive relationship. On average **a one percentage point** increase in the population percentage of high school graduates is associated with a 0.234 unit increase in voter turnout, it is statistically significant at the .001 level. The scatterplot 1 *(see appendix)* presents a visual of the positive trend and relationship between high school graduation population percentage and voter turnout. These results support my hypothesis.
+
+-   The initial results of my bivariate regression model in *Table 2 (see appendix)* show us that there is a negative relationship. On average **a one day** increase in the closing date for registration, voter turnout decreases by 0.266 units and is statistically significant at the .001 level. To further analyze my results, I present a scatterplot 2 in figure 2 *(see appendix)*, that displays the negative relationship between closing date registration and voter turn out, the plot displayed a downward trend. These results supports my hypothesis.
+
+-   The initial results of my bivariate regression model in *Table 3 (see appendix)* show us that on average, the turnout rate in southern states is about (-)7.11 **percentage points** **lower** than the average turnout in non-southern states. This is statistically significant at the .001 level. The boxplot in *figure 3* *(see appendix)* provides a visual representation of the voter turnout in southern (1) and non-southern (0) states. It shows that voter turnout in southern states is lower than non-southern states, further supporting my hypothesis.
+
+**Revision #3:** Reviewer 1 noted that: "You are correct to point out that policy-makers can infuence some of these variables, but you have not talked about why they should put in the effort (in other words, the substantive signifcance). Can any of these variables increase voter turnout rates by a suffciently large proportion to encourage action?". My revision is below.
+
+-   These findings implies that individuals are less likely to participate in elections if they have less time to register. Registration closing date could increase voter turnout, if we moved it to a later date. It can't just be one day, that is not enough for people in their every day lives. But if you moved later by a month or more, advertise the date so people are aware they have more time, it could give people enough notice to move their schedules around and plan accordingly.
+
+**REVIWER 2 NOTES (Mike)**
+
+**Revision #4:** Reviewer 2 noted **"**I suggest when using these you explain to the reader in text or notes to the figure what the various pieces of the figure reveal". I created my explanations in text for the boxplots. My revision is below
+
+-   The box-plot provides a visual representation of the voter turnout in southern (1) and non-southern (0) states. It shows that voter turnout in southern states is lower than non-southern states, further supporting my hypothesis.
+
+-   **Non-Southern States (Category 0)**:
+
+    -   The boxplot for non-Southern states (labeled as **0** on the x-axis) exhibits a **higher median voter turnout**.
+
+    -   The IQR extends from around **65 to 75**, similar to the Southern states.
+
+    -   However, there are **two outliers** below the lower whisker, suggesting exceptionally low voter turnout in those instances.
+
+-   **Southern States (Category 1)**:
+
+    -   The boxplot for Southern states (labeled as **1** on the x-axis) shows a **lower median voter turnout** compared to non-Southern states.
+
+    -   The **interquartile range** (IQR) spans approximately from **65 to 75**, indicating that the majority of Southern states fall within this range.
+
+    -   There are **no outliers** beyond the whiskers in this category
+
+**Revision #5:** Reviewer 2 noted to specify my unit: "Best to say day rather than unit." The revision is below.
+
+-   The negative coefficient for registration closing date (-0.207) suggests that on average, **a one day** increase in closing date registration, voter turnout decreases by about 0.207 percentage points, holding all else constant, supporting the hypothesis of a negative association.
+
+**Revision #6:** Reviewer 2 noted that "Something is off here in your results. p = .025". In my original submission, I addressed this issue. I put in my footnote that "When you run the regression without robust SE, the popualation percentage of high school graduation is signifcant at the 0.05 level. But if you run the regression with robust SE (which is the regression table 4) then it is not signifcant at the .05 level (it is signifcant at the .10 level)".
+
+-   But, to fix the reviewers note, I removed the issue and now p =.025 (*see Table 4 in Appendix).*
+
+**Revision #7:** Reviewer 2 suggested that I should be more descriptive in my titles, include variable names. Below I have all the table names edited to match the regression model. (Table 4 is in Appendix already fixed)
+
+Table 1: Bivariate Regression Model - Voter turnout rate on High school Graduation rate (%)
+
+Table 2: Bivariate Regression Model - Voter turnout rate on Closing date for registration
+
+Table 3: Bivariate Regression Model - Voter turnout rate on Southern States
+
+**Appendix**
+
+![](revision-table4.png)
