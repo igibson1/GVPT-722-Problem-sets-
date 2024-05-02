@@ -1,0 +1,494 @@
+---
+title: "Class notes 5/2"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(wbstats)
+library(countrycode)
+library(modelsummary)
+library(ggh4x)
+library(lme4)
+library(broom)
+library(broom.mixed)
+library(ggdist)
+library(marginaleffects)
+
+set.seed(333)
+```
+
+#### **Introducing Panel Data** 
+
+A country’s GDP this year is, in part, the product of its GDP last year; whether or not a country is at war this year is going to be influenced by whether or not it was at war last year; individuals’ votes in this year’s US Presidential Election will be shaped by who they voted for in the last election.
+
+#### **What is the relationship between health and wealth**?
+
+-   How will our variables change over time?
+
+    -   Outcome variable is life expectancy and time is the explanatory variable
+
+Looking at each country's GDP per capital from 2000 t0 2020
+
+```{r}
+gdp_df <- wb_data("NY.GDP.PCAP.CD", start_date = 2000, end_date = 2020, return_wide = F) |> 
+  transmute(iso3c, country, year = date, gdp_per_cap = value)
+
+#average life expectancy over this same period
+life_exp_df <- wb_data("SP.DYN.LE00.IN", start_date = 2000, end_date = 2020, return_wide = F) |> 
+  select(iso3c, country, year = date, life_exp = value)
+
+#build our data set
+full_df <- gdp_df |> 
+  left_join(life_exp_df, by = join_by(iso3c, country, year)) |> 
+  mutate(region = countrycode(country, "country.name", "region"),
+         year = year - 2000) |> 
+  relocate(region, .after = country)
+full_df
+```
+
+#### **Why are we doing this?** 
+
+The goal of your analysis is to undercover a general relationship between your outcome of interest and all of the things you theorize to be important drivers of that outcome of interest. You use this empirical analysis to provide evidence of that theorized relationship occurring out in the wild. When your theory applies to actors’ behavior over time, you should aim to demonstrate this to be the case
+
+-   Second, once you have decided to provide this evidence of your theory over time, your statistical tools need to also adapt. Your observations are no longer independent of each other
+
+#### **Starting Simple**
+
+```{r}
+#life expectancy for each country 
+ggplot(full_df, aes(x = (year + 2000), y = life_exp, group = country)) + 
+  geom_line(alpha = 0.25) + 
+  theme_minimal() + 
+  theme(panel.grid = element_blank()) + 
+  labs(x = "Year",
+       y = "Average Life Expectancy (in years)")
+```
+
+```{r}
+#Useful summray of these data is the global average life expectancy over time: 
+full_df |>
+  group_by(year) |> 
+  summarise(life_exp = mean(life_exp, na.rm = T)) |> 
+  ggplot(aes(x = (year + 2000), y = life_exp)) + 
+  geom_line() + 
+  theme_minimal() + 
+  theme(panel.grid = element_blank()) + 
+  labs(x = "Year",
+       y = "Average Life Expectancy (in years)")
+```
+
+This growth is linear and positive, (except for 2020 Covid) and we can model a linear relationship!
+
+```{r}
+m <- lm(life_exp ~ year, data = full_df)
+
+modelsummary(m, coef_rename = c(year = "Year"))
+```
+
+This model tells us that in in 2000 (when `year = 0`), the average life expectancy across countries globally was 67.52 years. This global average increases by an average of 0.29 years (or 3.5 months) every year thereafter.
+
+To put this in familiar terms, we have fit the following model:
+
+$$
+Average life expectancy = \beta0 + \beta1Year + \epsilon
+$$
+
+#### **Accounting for the structure of our data**
+
+-   This model accounts for time in a very straightforward and direct way. However, it ignores the structure of the data: it does not account for regional- or country-specific trends buried within. We lose a lot of interesting information when we summarize our data in this way.
+
+To illustrate, let’s take a look at how our model performs at the country-level. I will randomly select two countries from every region to illustrate.
+
+```{r}
+countries <- full_df |> 
+  group_by(region) |> 
+  sample_n(2) |> 
+  pull(country)
+```
+
+What average life expectancy does our very simple model predict for these countries across our time period?
+
+```{r}
+augment(m, newdata = full_df) |> 
+  filter(country %in% countries) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted)) + 
+  facet_nested_wrap(~ region + country) + 
+  theme_minimal()
+```
+
+As expected, the model predicts the same average life expectancy for every country in every region, despite clear differences between them.
+
+-   For example, countries in North America have a much higher average life expectancy than countries in Sub-Saharan Africa. It would be great if we could account for some of these differences.
+
+-   What if we could customize this starting point (the intercept) for each region? In other words, what if the starting point for our model was the average life expectancy in each region, instead of the global average?
+
+#### **Region-level intercepts** 
+
+Let’s ask our model to adjust its starting point to the average life expectancy in countries within the same region. We can do that by including each country’s region as a variable in our model:
+
+```{r}
+m_region <- lm(life_exp ~ year + region, data = full_df)
+
+modelsummary(m_region, coef_rename = c(year = "Year"))
+```
+
+In 2000 (our baseline year, where `year = 0`), the estimated average life expectancy among countries in East Asia and the Pacific (our baseline region) was 69.19 years.
+
+-   All regions other than South Asia and Sub-Saharan Africa had a higher average life expectancy than East Asia and the Pacific in 2000. North America had the highest average life expectancy with 76.8 years
+
+```{r}
+augment(m_region, newdata = full_df) |> 
+  filter(country %in% countries) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted)) + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal()
+```
+
+This is better! You can see that the starting point for each country looks more realistic than the global average. It reflects the average across the region.
+
+However, we can improve on this. Using this model, each country within the same region shares a starting point, but there can be a lot of variance within a single region.
+
+-   For example, look at the difference between Djibouti and Egypt. Djibouti’s average life expectancy in 2020 is below where Egypt started in 2000
+
+#### Country-level intercepts 
+
+Let’s ask our model to adjust the starting point to reflect the average life expectancy for each country in 2000
+
+```{r}
+m_country <- lm(life_exp ~ year + country, data = full_df)
+```
+
+Lets look at hour our model performs after this adjustment
+
+```{r}
+augment(m_country) |> 
+  filter(country %in% countries) |> 
+  left_join(
+    distinct(full_df, country, region)
+  ) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted)) + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal()
+```
+
+This is much better! We have a much more accurate model that accounts for what is going on at the country level.
+
+#### Random effects: a brief introduction
+
+What is going on? To start, we fit this very simple (and familiar) linear regression model:
+
+$$
+Average Life expectancy = \beta0 + \beta1Year + \epsilon
+$$
+
+You’ll remember that we assume that the error term () is normally distributed, centered at zero, and has some standard deviation (). Formally, we can write this as:
+
+$$
+\epsilon ~ N (0,\sigma)
+$$
+
+The standard deviation for our error term in our model above is:
+
+```{r}
+glance(m) |> 
+  pull(sigma)
+```
+
+So, we are assuming that the difference between each country’s actual average life expectancy and the average life expectancy our model predicts for that country is a random number of years pulled from this distribution
+
+```{r}
+error_m <- tibble(residual = rnorm(1e6, mean = 0, sd = glance(m)$sigma))
+
+ggplot(error_m, aes(x = residual)) + 
+  stat_halfeye()
+```
+
+Although the average of this error is zero, it has a very wide range. Some of those residuals can be as large as 25 years! This captures all of the variance in countries’ average life expectancy not picked up by annual growth rates (our single independent variable: `year`).
+
+What if we could open up all of that unexplained variance and take a good look at it?
+
+### Country-specific starting points 
+
+Let’s focus on the error around the intercept, . As we saw above, there is a lot of variation in that . It’s the average life expectancy across all countries in 2000 (our baseline year). Averages are very useful summaries, but they come at a cost of information. Let’s see what we lost:
+
+```{r}
+full_df |> 
+  filter(year == 0) |> 
+  ggplot(aes(x = life_exp)) + 
+  stat_halfeye() + 
+  theme_minimal() + 
+  labs(x = "Average life expectancy (years)",
+       y = NULL)
+```
+
+We reduced all of these values to just one summary value: the average (represented by that lonely dot). 
+
+we need to be careful not to miss important factors that influence the relationship we are interested in learning about.
+
+To illustrate, let’s assume that there are country-specific difference in the relationship between life expectancy and time. That’s why we see such a large difference between, say, Canada’s and Myanmar’s average life expectancies at any given point in time. Both countries’ populations had average life expectancies that grew each year. But they started at different, country-specific spots.
+
+When we do not account for the nested structure of our data, we miss these differences. But that doesn’t mean they don’t exist. It just means that they are hidden from us, sitting in the error term.
+
+### Your error is too full - equations on Harriets page
+
+The error term above accounts for all of the variation in average life expectancy that is not captured by the baseline average life expectancy (captured by the intercept) and average annual growth rate across all countries (captured by the coefficient on `year`). This includes a whole bunch of country-specific variance
+
+Now, we can (and should!) account for that .
+
+This model suggests that there is a general relationship between any country’s average life expectancy and time. This is appropriate! Generally, all countries’ average life expectancies are increasing over time. This is due to advancements in medicine and other quality of life boosters that transcend borders. However, we do not always observe a country’s average life expectancy perfectly following this relationship. There is some variance. All good and familiar so far.
+
+Previously, we have relied on our random error term () to capture this variance. However, the model written above suggests that there is also a country-specific effect that serves as an additional source of variance from that global relationship.  captures the variance that we observe just because Australia is Australia.
+
+Now, we can make some assumptions about the shape of that country-specific variance, just as we do for the other random variance. We assume that the country-specific variance from the general pattern is normally distributed, centered at zero, and has some standard deviation ().
+
+These variances from the general trend are still random. In fact, the only difference between this model and our more simple (and familiar) linear regression is this country-specific variance (). On average, this difference is zero! But often this varies by country and that variance is, on average, .
+
+Above we accounted for changes in the starting point for each country. In other words, we adjusted the intercept to reflect each country’s average life expectancy in year 0.
+
+#### Why not just include a country variable as we did above?
+
+To capture the country-specific starting points of the relationship between average life expectancy and time, we simply added the country as a variable into our model. This approach is good at capturing that different starting point, but falls down in capturing the uncertainty around those starting points.
+
+This is because this approach is over-contextualized: it ignores what each country has in common. The multi-level modelling approach introduced above explicitly parses out what countries have in common, and how their unique quirks make them deviate from this common relationship.
+
+Further, we often don’t have a lot of information on each observation. Here, we are fitting several regression lines using only 20 data points (one for each year observed for each country). The multi-level modelling approach allows us to build our understanding of the relationship across all available data.
+
+However, the above approach introduces the intuition behind accounting for the structure of your data in a way I find more intuitive than the multi-level approach. You can carry that logic with you through the following explanation
+
+#### Multi-level modelling 
+
+Let’s get started modelling the general relationship and the country-specific effects (fixed effects)
+
+-   In R, we use the `lme4::lme()` function:
+
+```{r}
+m_multi <- lmer(life_exp ~ year + (1 | country), data = full_df)
+
+modelsummary(m_multi, coef_rename = c(year = "Year"))
+```
+
+If we look back at the results of the simple model we fit at the start, we will see very similar coefficients to those captured here.
+
+-   The estimated average life expectancy in 2000 across all countries globally was 67.52 years. This estimated average is increasing by an average of 0.29 years annually.
+
+The magic is happening a little under the hood in our errors. They are reported in those two new lines: SD (Intercept country) and SD (Observations).
+
+Our model has separated out the global relationship (not affected by country-specific factors) and the country-specific features.
+
+The **fixed effects** describe the overall relationship within our data. This is similar to your standard linear regression model fit across all observations.
+
+-   In other words, this is the global average and global growth in average life expectancy. We can isolate these components:
+
+```{r}
+tidy(m_multi, effects = "fixed")
+```
+
+This gives us the estimated variance for average life expectancy across countries: 8.58. As we move from country to country, how much does the average life expectancy change on average? 8.58 years!
+
+This difference is *much* larger than changes to average life expectancy associated with our main independent variable: year. In terms of substantive meaning, which country you are looking at matters more than which years you are moving between.
+
+We also have an estimate of the remaining unexplained variation in life expectancy: 1.5 years. Together with the country-specific variance, we see that countries tend to randomly deviate from the general pattern by 10.09 years.
+
+This is great because we have now captured the country-specific component of our error (changes in average life expectancy not captured by the global average in our baseline year and annual changes). And it’s substantial! It makes up 85% of the total error in our model.
+
+How does our model perform?
+
+```{r}
+augment(m_multi) |> 
+  filter(country %in% countries) |> 
+  left_join(
+    distinct(full_df, country, region)
+  ) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted)) + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal()
+```
+
+It looks great!
+
+**Relationship between health and wealth**
+
+Okay, so we now have a good understanding of how each country’s average life expectancy grows over time. We have accounted for both time and the nested structure of our data.
+
+But now we want to explore a more interesting relationship: that between health and wealth. We know from previous classes that a country’s average life expectancy tends to grow with its GDP. How can we formalize that whilst accounting for differences in the relationship over time and between countries?
+
+First, let’s look at the relationship between health and wealth across all countries and years:
+
+```{r}
+ggplot(full_df, aes(x = gdp_per_cap, y = life_exp)) + 
+  geom_point() + 
+  theme_minimal() + 
+  labs(x = "GDP (USD)",
+       y = "Average life expectancy (years)")
+```
+
+There is a positive relationship but it isn't linear
+
+-   We can transform our variables to expose a more linear relationship
+
+-   Allow the intercept to vary by region (fixed effects!)
+
+-   Logging is very useful in helping see the relationship
+
+```{r}
+full_df <- full_df |> 
+  mutate(log_gdp = log(gdp_per_cap))
+
+ggplot(full_df, aes(x = log_gdp, y = life_exp)) + 
+  geom_point() + 
+  theme_minimal() + 
+  labs(x = "GDP (logged USD)",
+       y = "Average life expectancy (years)")
+```
+
+Each point in this cloud represents one country’s logged GDP per capita and average life expectancy in one year. This visualization does not tell us much about that fact. Let’s adjust it:
+
+```{r}
+ggplot(full_df, aes(x = log_gdp, y = life_exp, group = country)) + 
+  geom_point(alpha = 0.25) + 
+  geom_line(alpha = 0.25) + 
+  theme_minimal() + 
+  labs(x = "GDP (logged USD)",
+       y = "Average life expectancy (years)")
+```
+
+Lets isolate our sample of countries
+
+```{r}
+full_df |> 
+  filter(country %in% countries) |> 
+  ggplot(aes(x = log_gdp, y = life_exp)) + 
+  geom_line() + 
+  geom_point() + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal() + 
+  labs(x = "GDP per capita (logged USD)",
+       y = "Average life expectancy (years)")
+```
+
+Oh gosh. Okay, so we now have a better understanding of the structure of our data but it’s still a mess. We can see some fairly linear and positive relationships running around, but they are start and end at various different places. We will need to account for this diversity by fitting a multi-level model with country groupings.
+
+Let’s start by running a normal linear regression. This will be a our baseline:
+
+```{r}
+m_linear <- lm(life_exp ~ log_gdp + year, data = full_df)
+
+modelsummary(m_linear, 
+             coef_rename = c(log_gdp = "GDP per capita (US$, logged)", 
+                             year = "Year"))
+```
+
+Because we logged our variable of GDP per capita, we need to take one additional step before we can interpret the coefficient on GDP per capita in a way that is meaningful to humans. The predicted effect on a country’s average life expectancy of a \$1,000 increase in its GDP per capita is 31.6 years.
+
+How did I get this? First, I get the coefficient for a country’s logged GDP per capita:
+
+```{r}
+coef_gdp_linear <- tidy(m_linear) |> 
+  filter(term == "log_gdp") |> 
+  pull(estimate)
+
+coef_gdp_linear
+```
+
+I then translate a GDP per capita increase of \$1000 into a logged GDP per capita increase
+
+```{r}
+log(1000)
+```
+
+I then find the predicted increase in a country’s life expectancy resulting from a \$1,000 (or a 6.908 logged dollar) increase in a country’s GDP per capita, holding the yearly effects constant:
+
+```{r}
+coef_gdp_linear * log(1000)
+```
+
+Holding a country’s GDP per capita constant, this average life expectancy increases by an average of 0.04 years annually.
+
+Our model estimates these effects across all countries. But we know each country has a slightly different relationship between health and wealth. So, we should model this difference using multilevel modelling. As above, we are going to fit different intercepts for each country.
+
+```         
+```
+
+```{r}
+m_multi <- lmer(life_exp ~ log_gdp + year + (1 | country), 
+                data = full_df)
+
+modelsummary(m_multi, 
+             coef_rename = c(log_gdp = "GDP per capita (US$, logged)", 
+                             year = "Year"))
+```
+
+What did we find? The model has isolated the global (population) effects. Holding annual growth constant, a country’s average life expectancy increases by an average of 9.5 years for every \$1,000 increase in its GDP per capita. Holding that growth in GDP per capita constant, a country’s average life expectancy increases by an average of 0.22 years annually.
+
+We also have the country-specific effects. We find that life expectancy varies by 6.945 years between countries. This country-level variance accounts for 83% of the total residual variation of the model. How did I get that?
+
+Lets look at how our model performs our sample of countries for their GDP per capita:
+
+```{r}
+augment(m_multi) |> 
+  filter(country %in% countries) |> 
+  left_join(
+    distinct(full_df, country, region)
+  ) |> 
+  ggplot(aes(x = log_gdp)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted), colour = "red") + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal() + 
+  labs(x = "Year", 
+       y = "Average life expectancy (years, logged)")
+```
+
+and over time:
+
+```{r}
+augment(m_multi) |> 
+  filter(country %in% countries) |> 
+  left_join(
+    distinct(full_df, country, region)
+  ) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted), colour = "red") + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal() + 
+  labs(x = "Year", 
+       y = "Average life expectancy (years, logged)")
+```
+
+Pretty good! Let’s look at what we gained by accounting for these country-level differences:
+
+```{r}
+augment(m_linear) |> 
+  select(.rownames, life_exp, log_gdp, year, .fitted_linear = .fitted) |> 
+  left_join(
+    augment(m_multi) |>
+      select(.rownames, life_exp, log_gdp, year, .fitted_multi = .fitted)
+  ) |> 
+  left_join(
+    full_df |> 
+      select(country, region, year) |> 
+      rownames_to_column(var = ".rownames")
+  ) |> 
+  filter(country %in% countries) |> 
+  ggplot(aes(x = year)) + 
+  geom_point(aes(y = life_exp)) + 
+  geom_line(aes(y = .fitted_linear), colour = "blue") + 
+  geom_line(aes(y = .fitted_multi), colour = "red") + 
+  ggh4x::facet_nested_wrap(~ region + country) + 
+  theme_minimal() + 
+  labs(x = "Year", 
+       y = "Average life expectancy (years)")
+```
+
+It looks much better across all countries and years!
