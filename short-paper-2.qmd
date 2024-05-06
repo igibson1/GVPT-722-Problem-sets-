@@ -73,11 +73,15 @@ Table 1 (see appendix) presents the original model (Model 1):
 
 -   Table 1 (see appendix) shows the new model and indicates that the influence of high school graduation rates on voter turnout has a coefficient of 0.015, which is not statistically significant at p \< 0.05. However, the interaction between high school graduation rates and Southern States is significant, with a coefficient of 0.234. This suggests that the impact of high school graduation rates on voter turnout differs depending on whether a state is in the South. The t-stat is .376, it is not significantly different from 0, indicating that there is very weak evidence against the null hypothesis (H0= there is no effect of the pcthsg on voter turnout).
 
+-   In Table 2, we see an F-statistic of 7.0388 with a corresponding p-value of 0.001006, indicating high significance. Since this p-value is much less than 0.05, we reject the null hypothesis. This means that high school graduation rates indeed have a significant effect on voter turnout, and there's also a significant interaction between high school graduation rates and Southern status in explaining voter turnout variability.
+
+-   The data suggests that high school graduation rates play a significant role in voter turnout, especially when we consider their interaction with Southern status.
+
 -   Although the primary effect is not significant, the significant interaction term indicates that the relationship between high school graduation rates and voter turnout is region-dependent, specifically emphasizing a conditional effect associated with being in the South.
 
 5.  Is the effect of high school graduation rates on turnout substantively significant in the south? What about the non-south?
 
--   The coefficient on Southern states in Model 2 is -22.204 indicating that **on average** southern states have a significantly lower voter turnout, **holding all else constant,** compared to non-southern states. **This is a large substantive effect**. This is substantively significant because it suggests that a targeted approach for policy-makers, educational policies might not only have educational benefits but also civic and social benefits in terms of increased participation on voting.
+-   The coefficient on Southern states in Model 2 is -22.204 indicating that **on average** southern states have a significantly lower voter turnout, **holding all else constant,** compared to non-southern states. **This is a large substantive effect**. This is substantively significant because it suggests that a targeted approach for policy-makers, educational policies might not only have educational benefits but also civic and social benefits in terms of increased participation on voting. In
 
 -   The Non-southern states in Model 2 coefficient (0.015) is not statistically significant. This suggests that any change in high school graduation rates **does not have a significant direct effect on turnout in non-Southern states**. Different factors may play a more significant role in voter turnout in non-southern states.
 
@@ -86,6 +90,10 @@ Table 1 (see appendix) presents the original model (Model 1):
 -   The new model shows a negative impact of being a Southern State on voter turnout and is statistically significant. in Table 1: Model 2 (see appendix), the coefficient for Southern States is -22.204, indicating a p-value of less than 0.001. The negative coefficient indicates that being a Southern state is associated with lower voter turnout compared to non-Southern states. This finding remains significant even after adjusting for high school graduation rates and their interaction with being in the South, underscoring the impact of a state's geographic (south or non-south) location on voter turnout.
 
 -   The t-stat is -3.876 (Table 1, see appendix) indicates that the coefficient is significantly different from 0, the negative t-stat indicates that the coefficient is less than 0, this suggests a negative effect of being a southern state on voter turnout, and we observe this relationship.
+
+-   When examining the F-statistic of 28.034, presented in Table 3, an extremely small p-value is evident. This p-value indicates strong evidence against the null hypothesis, presenting a substantial effect of the south on turnout, alongside the existence of an interaction effect between high school graduation rates and southern status.
+
+-   The linear hypothesis test the findings suggest that whether Southern or non-Southern, along with the interaction between high school graduation rates and southern status, significantly influence voter turnout within the new model. The variables denoting Southern status and its interaction with high school graduation rates are influential factors in clarifying voter turnout patterns within the model.
 
 7.  Finally, please explain in a few sentences why you will or will not include the new model in the paper.
 
@@ -149,4 +157,58 @@ plot_predictions(south_HS_model, condition = c("pcthsg", "south")) +
   scale_color_manual(values = c("blue", "red"),labels = c("Non-Southern States", "Southern States")) +
                        scale_fill_manual(values = c("blue", "red")) + guides(fill = FALSE)
 
+```
+
+```{r}
+#linear hypothesis test pcthsg 
+
+library(broom)
+library(car)
+library(kableExtra)
+
+# Perform linear hypothesis test
+hypo1 <- linearHypothesis(south_HS_model, c("pcthsg = 0", "pcthsg:south = 0"))
+
+# Format p-values
+hypo1$`Pr(>F)` <- as.character(format(hypo1$`Pr(>F)`, scientific = FALSE))
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.001] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.001], "***")
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.01 & hypo1$`Pr(>F)` >= 0.001] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.01 & hypo1$`Pr(>F)` >= 0.001], "**")
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.05 & hypo1$`Pr(>F)` >= 0.01] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.05 & hypo1$`Pr(>F)` >= 0.01], "*")
+
+# Create LaTeX table
+kable_out <- kable(hypo1, format = "latex", booktabs = TRUE, caption = "The effect of High School Graduation rates on Turnout") %>%
+  add_header_above(c("Linear Hypothesis Test" = 6))
+
+# Add footnotes
+kable_out <- footnote(kable_out, general = c("*** p < 0.001", "** p < 0.01", "* p < 0.05"),
+                      threeparttable = TRUE)
+
+kable_out
+
+
+```
+
+```{r}
+#south 
+library(broom)
+library(car)
+library(kableExtra)
+
+# Perform linear hypothesis test
+hypo2 <- linearHypothesis(south_HS_model, c("south = 0", "pcthsg:south = 0"))
+
+# Format p-values
+hypo2$`Pr(>F)` <- as.character(format(hypo2$`Pr(>F)`, scientific = FALSE))
+hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.001] <- paste0(hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.001], "***")
+hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.01 & hypo2$`Pr(>F)` >= 0.001] <- paste0(hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.01 & hypo2$`Pr(>F)` >= 0.001], "**")
+hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.05 & hypo2$`Pr(>F)` >= 0.01] <- paste0(hypo2$`Pr(>F)`[hypo2$`Pr(>F)` < 0.05 & hypo2$`Pr(>F)` >= 0.01], "*")
+
+# Create LaTeX table
+kable_out2 <- kable(hypo2, format = "latex", booktabs = TRUE, caption = "The effect of Southern States on Turnout") %>%
+  add_header_above(c("Linear Hypothesis Test" = 6))
+
+# Add footnotes
+kable_out2 <- footnote(kable_out2, general = c("*** p < 0.001", "** p < 0.01", "* p < 0.05"))
+
+kable_out2
 ```
