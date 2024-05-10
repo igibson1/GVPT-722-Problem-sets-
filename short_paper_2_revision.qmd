@@ -1,0 +1,124 @@
+---
+title: "Short Paper Two (Revision)"
+subtitle: "Due on May 13, 2024 by 5pm"
+author: Isabelle Gibson
+format: 
+  pdf:
+    fig-pos: "H"
+    linestretch: 2
+    fontsize: "12pt"
+    margin-bottom: "1in"
+    margin-top: "1in"
+    margin-left: "1in"
+    margin-right: "1in"
+editor: visual
+execute: 
+  message: false
+  warning: false
+  echo: false
+---
+
+```{r}
+#data 
+library(haven)
+library(modelsummary)
+uscensus <- read_dta("aggcpsgvpt722.dta")
+
+uscensus_shortp2 <- uscensus
+```
+
+First, run the following model (you do not need to report the results):
+
+$$
+vote = \beta_0+ \beta_1pcthsg + \beta_2south + \beta_3pcthsg*south + \beta_4close  
+$$
+
+1.  Write an equation using the estimated coefficient results to show the effect of high school graduation rates on turnout (2 points)
+
+$$
+vote = \beta_2 + \beta_3*south
+$$
+
+2.  Write an equation using the estimated coefficient results to show the effect of south on turnout (2 points)
+
+$$
+vote = \beta_1 + \beta_3*pcthsg
+$$
+
+3.  Can $\beta_2$ be interpreted on its own? If so, what is it? If not, why not? Answer in no more than 1 sentence. (2 points)
+
+-   **ANSWER:** Yes, b2 can be interpreted on its own because it is the effect of high school graduation rates on the non-south and south variable.
+
+4.  Is the effect of high school graduation rates on turnout statistically significant? How do you know (answer in no more than 1 sentence and report the relevant test statistics) (2 points)
+
+$H_0$ = High school graduation rates and the interaction with southern state status have no effect on voter turnout
+
+-   **ANSWER:** Yes it is statistically significant, when examining a linear hypothesis test in Table 2, the F-statistic of 7.0388 with a highly significant p-value of 0.001006 clearly rejects the null hypothesis confirming significant effects in both high school graduation rates alone **and** in combination with being in a southern state on the variation in voter turnout.
+
+5.  Is the effect of high school graduation rates on turnout substantively significant in the south? What about the non-south? Answer in no more than 4 sentences total? (5 points)
+
+$$
+vote = \beta_0+ \beta_1pcthsg + (-22.204)south + \beta_3pcthsg*south + \beta_4close 
+$$
+
+-   **SOUTH:** The coefficient on Southern states in Model 2 is -22.204 (Table 1) indicates that on average southern states voter turnout decreases by 22.204 percentage points, holding all else constant.
+
+    -   This is substantively significant effect because 22.204 percentage points in an election can change election outcomes due soley to the geographic location of being in the south.
+
+-   **NON-SOUTH:** The Non-southern states in Model 2 coefficient (0.015) indicates that on average non-southern states voter turnout increases by 0.015 percentage points, holding all else constant.
+
+    -   This suggests that any change in high school graduation rates is not substantively significant, an average 0.015 percentage point increase in voter turnout in non-southern states wont likely effect electoral outcomes
+
+#### Appendix
+
+**Table 1**
+
+```{r}
+#run the model 
+
+reg_model <- lm(vote ~ close + pcthsg + south, data = uscensus_shortp2)
+south_HS_model <- lm(vote ~ close + pcthsg + south + pcthsg:south, data = uscensus_shortp2)
+
+newmodel <- list(
+  "Model 1." = reg_model,
+  "Model 2" = south_HS_model
+)
+
+modelsummary(newmodel,
+             position = "H",
+             title = "Linear regression model of Voter turnout",
+             coef_rename = c(south = "Southern States",
+                             pcthsg = "Percentage of HS Graduates",
+                             close = "Voter Registration Closing Date",
+                             "pcthsg:south" = "Percentage of HS Graduates - Southern State"),
+          conf_level = .95)
+```
+
+**Table 2**
+
+```{r}
+#linear hypothesis test pcthsg 
+
+library(broom)
+library(car)
+library(kableExtra)
+library(dplyr)
+
+# Perform linear hypothesis test
+hypo1 <- linearHypothesis(south_HS_model, c("pcthsg = 0", "pcthsg:south = 0"))
+
+# Format p-values
+hypo1$`Pr(>F)` <- as.character(format(hypo1$`Pr(>F)`, scientific = FALSE))
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.001] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.001], "***")
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.01 & hypo1$`Pr(>F)` >= 0.001] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.01 & hypo1$`Pr(>F)` >= 0.001], "**")
+hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.05 & hypo1$`Pr(>F)` >= 0.01] <- paste0(hypo1$`Pr(>F)`[hypo1$`Pr(>F)` < 0.05 & hypo1$`Pr(>F)` >= 0.01], "*")
+
+# Create LaTeX table
+kable_out <- kable(hypo1, format = "latex", booktabs = TRUE, caption = "The Linear Hypothesis test of High school Graduation Rates")
+
+# Add footnotes
+kable_out <- footnote(kable_out, general = c("*** p < 0.001", "** p < 0.01", "* p < 0.05"),
+                      threeparttable = TRUE)
+
+kable_out
+```
