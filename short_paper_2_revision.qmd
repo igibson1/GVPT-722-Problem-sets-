@@ -39,10 +39,18 @@ $$
 vote = \beta_2 + \beta_3*south
 $$
 
+$$
+vote = -22.204 + 0.234*south
+$$
+
 2.  Write an equation using the estimated coefficient results to show the effect of south on turnout (2 points)
 
 $$
 vote = \beta_1 + \beta_3*pcthsg
+$$
+
+$$
+vote = 0.015 + 0.234*pcthsg
 $$
 
 3.  Can $\beta_2$ be interpreted on its own? If so, what is it? If not, why not? Answer in no more than 1 sentence. (2 points)
