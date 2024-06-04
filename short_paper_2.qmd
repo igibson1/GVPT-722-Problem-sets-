@@ -1,0 +1,54 @@
+---
+title: "Short Paper Two"
+subtitle: "Due on April 26, 2024 by 5pm"
+format: 
+  pdf:
+    linestretch: 2
+    fontsize: "12pt"
+    margin-bottom: "1in"
+    margin-top: "1in"
+    margin-left: "1in"
+    margin-right: "1in"
+editor: visual
+execute: 
+  message: false
+  warning: false
+---
+
+This assignment is a direct follow up to *Short Paper 1*. The general purpose of this assignment is to provide you with more experience analyzing data and reporting the results as they would appear in a professional paper and responding to reviewers' comments/suggestions. In this assignment you will use U.S. Census data from the Current Population Survey Voter Supplement Files from 1972-2000 (excluding 1976) aggregated to the state level. The data file is on the course ELMS site and is named `aggcpsgvpt722.dta`.
+
+Background: In Short Paper 1, we asked you, in part, to run a multiple regression model with state level voter turnout in the United States (`vote`) as the dependent variable and the closing date for registration (`close`), the percentage of high school graduates in the state (`pcthsg`), and whether or not the state is a southern state (`south`) as the independent variables. If you have not done so already, run this model exactly as specified and with the variables coded as they are originally coded in the data set. You do not need to report the results from this model in the paper.
+
+## New Information
+
+For the most part, you should think of your paper as part of a response memo to journal reviewers and the editor after they have provided a review of your paper suggesting a revise and resubmit. That is, assume that you ran the model from *Short Paper 1* as instructed and as part of a revise and resubmit process now must respond to the excerpt from the review below. Your task here is to run the analyses as the reviewer suggests, provide a written response that contains the information and output (professionally formatted) the reviewer requested, and to explain what decision you made regarding whether to include the information in the body of the paper or not.
+
+## Review Excerpt
+
+Before this paper can be published the author needs to evaluate my expectation that the effects of high school graduation rates and whether a state is southern or not are conditional on one another. More specifically, **I expect that the negative effect of the south becomes less strong as high school graduation rates increase (i.e. the effect of the south is less strongly negative at higher levels of high school graduation rates).** To test this relationship I would like the author to do the following:
+
+-   Provide scatter plots with fitted regression lines of the relationship between high school graduation rates and turnout in the south and non-south, without controlling for any other variables.
+
+    -   Does it appear from this descriptive analysis that the effect of high school graduation rates is different in the south and non-south?
+
+<!-- -->
+
+-   Run a model that extends the model used in the original submission so that it now includes an interaction between the high school graduation rate and south variables. Report the results in a table.
+
+    -   Does the evidence support my hypothesis? Be sure to discuss both substantive and statistical significance and include a graph of the effect of the south on turnout across high school graduation rates with confidence intervals around the effect.
+
+-   What is the substantive meaning of the coefficient on the interaction term between high school graduation rates and south?
+
+-   Overall, based on the new model, is the effect of **high school graduation rates** on turnout statistically significant? Please report the relevant test statistics.
+
+-   Is the effect of high school graduation rates on turnout substantively significant in the south? What about the non-south?
+
+-   Overall, based on the new model, is the effect of **south** on turnout statistically significant? Please report the relevant test statistics.
+
+-   Finally, please explain in a few sentences why you will or will not include the new model in the paper.
+
+## Final Instructions
+
+Respond to each of the points above as succinctly as possible, writing as if the reviewer and editor are your audience. You can respond to each bullet individually.
+
+You must submit your paper and any scripts you used to produce the paper via both ELMs and Github.

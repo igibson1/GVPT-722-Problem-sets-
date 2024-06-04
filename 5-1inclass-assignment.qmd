@@ -1,0 +1,78 @@
+---
+title: "Short paper lab notes 5-2"
+author: "Isabelle Gibson"
+format: html
+editor: visual
+---
+
+```{r}
+library(foreign)
+library(dplyr)
+library(ggplot2)
+library(haven)
+library(modelsummary)
+library(broom)
+library(sandwich)
+library(car)
+library(marginaleffects)
+library(kableExtra)
+library(car)
+library(knitr)
+```
+
+read in data set
+
+```{r}
+uscensus <- read_dta("aggcpsgvpt722.dta")
+
+uscensus_inclass <- uscensus
+```
+
+```{r}
+#plot the outcome variable: voter turnout 
+ggplot(uscensus_inclass, aes(x = vote)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black", aes(y = ..count..)) +
+  labs(title = "Histogram: Distribution of Voter Turnout Rates",
+       x = "Voter Turnout Rate",
+       y = "Frequency") +
+  theme_minimal()
+
+#plot distribution of pcthsg 
+
+library(ggplot2)
+
+# Assuming uscensus_shortp contains the necessary data
+ggplot(uscensus_inclass, aes(x = pcthsg)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black", aes(y = ..count..)) +
+  labs(title = "Histogram: Distribution of Percentage of High School Graduates",
+       x = "Percentage of High School Graduates",
+       y = "Frequency") +
+  theme_minimal()
+
+library(ggplot2)
+
+#close date
+ggplot(uscensus_inclass, aes(x = close)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black", aes(y = ..count..)) +
+  labs(title = "Histogram: Closing Date",
+       x = "Close Date",
+       y = "Frequency") +
+  theme_minimal()
+
+
+
+```
+
+```{r}
+m <- lm(vote ~ south + pcthsg + close + year, data = uscensus_inclass)
+
+modelsummary(m,
+             position = "H",
+              title = "Regression Summary",
+             coef_rename = c(pcthsg = "% of HS Graduates"
+                           ),
+             stars = TRUE)
+
+#year is now starting at year 0, we need to make a minimum year  (1972)
+# make it on a 4 year change, predicted voter turnout every 4 years (election)
+```
