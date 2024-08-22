@@ -170,18 +170,14 @@ ggplot(uscensus_shortp, aes(x = as.factor(south), y = vote)) +
 
 reg_model <- lm(vote ~ close + pcthsg + south, data = uscensus_shortp)
 
-reg_model <- list(
-  "OLS 1" = lm(vote ~ close + pcthsg + south, data = uscensus_shortp)
-)
 modelsummary(reg_model,
             position = "H", 
             title = "Table 4: Multivariate Regression Summary",
-            statistic = c("SE = {std.error}", "conf.int", "p.value"),
+            statistic = c("SE = {std.error}", "t = {statistic}", "conf.int", "p.value"),
             vcov = "robust", 
             stars = TRUE,
             coef_rename = c(south = "Southern States",
                             pcthsg = "Percentage of Population with Highschool Diploma",
-                            close = "Close date for Registration"),
-            conf_level = 0.95
+                            close = "Close date for Registration")
 )
 ```

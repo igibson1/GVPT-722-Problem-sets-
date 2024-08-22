@@ -81,7 +81,7 @@ Table 1 (see appendix) presents the original model (Model 1):
 
 5.  Is the effect of high school graduation rates on turnout substantively significant in the south? What about the non-south?
 
--   The coefficient on Southern states in Model 2 is -22.204 indicating that **on average** southern states have a significantly lower voter turnout, **holding all else constant,** compared to non-southern states. **This is a large substantive effect**. This is substantively significant because it suggests that a targeted approach for policy-makers, educational policies might not only have educational benefits but also civic and social benefits in terms of increased participation on voting. In
+-   The coefficient on Southern states in Model 2 is -22.204 indicating that **on average** southern states have a significantly lower voter turnout, **holding all else constant,** compared to non-southern states. **This is a large substantive effect**. This is substantively significant because it suggests that a targeted approach for policy-makers, educational policies might not only have educational benefits but also civic and social benefits in terms of increased participation on voting.
 
 -   The Non-southern states in Model 2 coefficient (0.015) is not statistically significant. This suggests that any change in high school graduation rates **does not have a significant direct effect on turnout in non-Southern states**. Different factors may play a more significant role in voter turnout in non-southern states.
 
